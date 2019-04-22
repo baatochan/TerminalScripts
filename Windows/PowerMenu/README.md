@@ -10,7 +10,7 @@ These actions are:
 ## Dependencies
 These scripts require `psshutdown.exe` from [PsTools](https://docs.microsoft.com/en-us/sysinternals/downloads/psshutdown) in order to work.
 
-## Instalation
+## Installation
 1. Extract `psshutdown.exe` (or all PsTools) into `%windir%\System32`
 1. Copy the scripts files into `%windir%\System32`
 1. Copy all icons (from `/icons` dir) into `%windir%\System32`
