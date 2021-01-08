@@ -1,0 +1,2 @@
+0 1 1 * * /root/backup/monthly.sh
+0 5 * * * /root/backup/daily.sh
