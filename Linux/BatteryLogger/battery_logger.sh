@@ -37,6 +37,16 @@ elif [ $1 == "--start" ]; then
     script_path=$(realpath $0)
     crontab -l > temp_mycron
     sed -i "\#$(realpath $0)#d" ./temp_mycron # checking if this script is in the cron already and removing; using hash as sed delimiter because path contains slashes
+    if grep -q "battery_logger.sh" ./temp_mycron; then # check if other battery_logger instances are running
+        read -p "Chrone file contains entry for battery_logger in another path. Do you want to remove it? [y/N]: " -n 1 -r
+        echo # print new line, becase read doesnt expect user to press enter
+        if [[ $REPLY =~ ^[Yy]$ ]]; then
+            sed -i "/battery_logger.sh/d" ./temp_mycron # remove all battery_logger entries in the chrone file
+            echo "Chrone file entries for other battery_logger instances have been removed."
+        else
+            echo "Chrone file has NOT been modified."
+        fi
+    fi
     echo "* * * * * cd $(dirname $script_path) && $script_path" >> temp_mycron # cd into dir name for keeping the log in the same dir as script
     crontab temp_mycron
     rm temp_mycron
@@ -47,6 +57,16 @@ elif [ $1 == "--stop" ]; then
     # remove cron job
     crontab -l > temp_mycron
     sed -i "\#$(realpath $0)#d" ./temp_mycron # using hash as sed delimiter because path contains slashes
+    if grep -q "battery_logger.sh" ./temp_mycron; then # check if other battery_logger instances are running
+        read -p "Chrone file contains entry for battery_logger in another path. Do you want to remove it? [y/N]: " -n 1 -r
+        echo # print new line, becase read doesnt expect user to press enter
+        if [[ $REPLY =~ ^[Yy]$ ]]; then
+            sed -i "/battery_logger.sh/d" ./temp_mycron # remove all battery_logger entries in the chrone file
+            echo "Chrone file entries for other battery_logger instances have been removed."
+        else
+            echo "Chrone file has NOT been modified."
+        fi
+    fi
     crontab temp_mycron
     rm temp_mycron
 # elif [ $1 == "--help" ]; then # add help for this script
