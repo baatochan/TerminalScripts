@@ -2,7 +2,7 @@
 
 # --start THIS SCRIPT FROM THE SAME DIR WHERE IT IS STORED
 
-filename="battery_log.csv"
+filename="battery_log.csv" # filename can't use current epoch because every time the script is run it will use a different file name
 
 if [ $# -eq 0 ]; then # if no params
     # using printf for formatted output, bashlash on everyline for escaping new lines
@@ -27,7 +27,7 @@ elif [ $1 == "--start" ]; then
     if [ -f $filename ]; then
         filename_no_ext="${filename%.*}" # split file name var into name and extension using the last .
         extension="${filename##*.}"
-        mv $filename ${filename_no_ext}_$(date +%s).$extension # add current epoch to the old log
+        mv $filename ${filename_no_ext}_old_$(date +%s).$extension # add current epoch to the old log
     fi
 
     # create a header
